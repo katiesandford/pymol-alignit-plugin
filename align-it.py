@@ -1,6 +1,4 @@
-# import tkinter.filedialog
 from pymol.Qt import QtGui, QtCore, QtWidgets
-# import Pmw
 
 import pymol
 from pymol.cgo import * 
@@ -8,25 +6,15 @@ import os
 import sys
 import re
 
-#------------------------------------------------------------------------------#
-# Create AlignIt Menu                                                           #
-#------------------------------------------------------------------------------#
-# def __init__(self):
-# 	self.menuBar.addmenuitemqt('Plugin', 'command',
-# 							'AlignIt visualization plugin', label = 'AlignIt...',
-# 							command = lambda s=self: AlignItPlugin(s))
+
 
 def __init_plugin__(self=None):
     from pymol import plugins
     plugins.addmenuitemqt('AlignIt visualization plugin', alignit_plugin)
-
-# dialog = None				
+		
 
 def alignit_plugin():
-	print("+++ Silicos-it::AlignIt-1.0.4 Pymol Plugin (2012-2013) +++")
-	# global dialog
-
-	# if not dialog:
+	print("+++ Silicos-it::AlignIt Pymol Plugin (2019) +++")
 	print('creating dialog')
 	dialog = create_dialog()
 
@@ -39,10 +27,7 @@ def create_dialog():
 	layout = QtWidgets.QVBoxLayout(dialog)
 	alignit = AlignItPlugin()
 	actions = {
-		# 'Create pharmacophore': lambda: alignit.runAlignIt(dialog),
 		'Read pharmacophore...':  lambda: alignit.readAlignIt(dialog),
-		'Write pharmacophore...': lambda: alignit.writeAlignIt(dialog),
-		# 'Create exclusion spheres': lambda: alignit.createExcl(dialog),
 	}
 
 	for name, action in actions.items(): 
@@ -54,56 +39,12 @@ def create_dialog():
 
 class AlignItPlugin:
 
-	#-----------------------
 	def __init__(self):
 
-		# print("+++ Silicos-it::AlignIt-1.0.4 Pymol Plugin (2012-2013) +++")
 		self.phar = []
-		#TODO store id for pharmacophore
-		
-		# self.parent = app.root
-
-
-		# print('test')
-		# # self.dialog = Pmw.Dialog(self.parent, \
-
-		# self.dialog = QtWidgets.QDialog()
-		# self.dialog.setWindowTitle('AlignIt Pymol plugin')
-		# self.layout = QtWidgets.QVBoxLayout(self.dialog)
-		# button_layout = QtWidgets.QHBoxLayout()
-		# self.layout.addLayout(button_layout)
-		# self.layout.setContentsMargins(5, 0, 5, 0)
-		# # self.dialog = Pmw.Dialog(self, \
-		# 						buttons = ( \
-		# 						'Create pharmacophore', 
-		# 						'Read pharmacophore...', 
-		# 						'Write pharmacophore...', 
-		# 						'Create exclusion spheres',
-		# 						'Quit'),
-		# 						title = 'AlignIt Pymol plugin',
-		# 						buttonboxpos = 'e')
-		# 						# command = self.execute)
-		# self.dialog.show()
-		# self.dialog.raise_()
-		# print('end')
-
-	#----------------------
-	# def execute(self, opt):
-	# 	if(opt=='Create pharmacophore'):
-	# 		self.runAlignIt()
-	# 	elif(opt=='Read pharmacophore...'):
-	# 		self.readAlignIt()
-	# 	elif(opt=='Write pharmacophore...'):
-	# 		self.writeAlignIt()
-	# 	elif(opt=='Create exclusion spheres'):
-	# 		self.createExcl()
-	# 	else:
-	# 		print("+++ Silicos-it::AlignIt Pymol Plugin (2012-2013) +++")
-	# 		self.dialog.withdraw()
 
 	#------------------
 	def log(self, msg):
-		#TODO create label in widget
 		print(" * "+msg)
 
 	#TODO method 'err' ?
@@ -160,11 +101,6 @@ class AlignItPlugin:
 		file_dialog = QtWidgets.QFileDialog(dialog)
 		fileName, _  = QtWidgets.QFileDialog.getOpenFileName(dialog, 'Open File')
 		return fileName
-		# file = open(name,'r')
-		# with file:
-		# 	text = file.read()
-		# 	# self.textEdit.setText(text)
-		# 	return text
 
 	def readAlignIt(self, dialog):
 		
@@ -174,21 +110,6 @@ class AlignItPlugin:
 		self.log("Done reading pharmacophore.")
 		pymol.cmd.center()
 		pymol.cmd.zoom()
-
-		# file = tkinter.filedialog.askopenfile(parent=self.parent,
-  #                                   mode='r',
-		# 							filetypes=[('Pharmacophore', '*.phar')],
-  #                                   title='Open pharmacophore file')
-		# if file != None:
-		# 	self.parseFile(file)
-		# 	file.close()
-		# else:
-		# 	self.log("ERROR: can't read pharmacophore file.")
-
-		# self.log("Done reading pharmacophore.")
-		
-		# pymol.cmd.center()
-		# pymol.cmd.zoom()
 	
 #------------------------------------------------------------------------------#
 # Create Exclusion Spheres                                                     #
@@ -231,14 +152,7 @@ class AlignItPlugin:
 
 	def writeAlignIt(self, dialog):
 		print('writeAlignIt')
-
-		# file = tkinter.filedialog.asksaveasfile(parent=self.parent,
-		# 								filetypes=[('Pharmacophore', '*.phar')],
-		# 								title='Save pharmacophore')
-		# if file == None:
-		# 	self.log("ERROR: cannot save file.")
-		# 	sys.exit(1)
-		with open('/Users/katiesandford/Documents/dev/chemval/pymolplugins/test.phar', 'w') as file:
+		with open('test.phar', 'w') as file:
 			file.write('Generated_by_AlignIt_Pymol_Plugin\n')
 			print(self.phar)
 			for p in self.phar:
